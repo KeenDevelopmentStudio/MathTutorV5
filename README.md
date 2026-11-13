@@ -1,4 +1,4 @@
-# Math Tutor V4
+# Math Tutor V5
 
 <b>Table of Content</b>
 - [Summary](#summary)
@@ -15,6 +15,7 @@ This is the fourth iteration of the MathTutor program. In this update, we added 
 
 ## Maintainers
 [@KeenDevelopmentStudio](https://github.com/KeenDevelopmentStudio) Treven Keen
+[@RCJColvard-dot](https://github.com/RCJColvard-dot) Connor Colvard
 
 
 ## New Concepts Used
