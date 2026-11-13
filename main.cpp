@@ -63,13 +63,13 @@ int main() {
     // Title Display
     cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
     cout << R"(
-         __  __       _   _   _____      _           __     ___  _
-        |  \/  | __ _| |_| |_|_   _|   _| |_ ___  _ _\ \   / / || |
-        | |\/| |/ _` | __| '_ \| || | | | __/ _ \| '__\ \ / /| || |_
-        | |  | | (_| | |_| | | | || |_| | || (_) | |   \ V / |__   _|
-        |_|  |_|\__,_|\__|_| |_|_| \__,_|\__\___/|_|    \_/     |_|   )" << endl << endl;
+         __  __       _   _   _____      _           __     ______
+        |  \/  | __ _| |_| |_|_   _|   _| |_ ___  _ _\ \   / / ___|
+        | |\/| |/ _` | __| '_ \| || | | | __/ _ \| '__\ \ / /|___ \
+        | |  | | (_| | |_| | | | || |_| | || (_) | |   \ V /  ___) |
+        |_|  |_|\__,_|\__|_| |_|_| \__,_|\__\___/|_|    \_/  |____/ )" << endl << endl;
     cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-    cout << "*    Welcome to Version 4 of the Awesome Math Tutor!        *" << endl;
+    cout << "*    Welcome to Version 5 of the Awesome Math Tutor!        *" << endl;
     cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
 
     // Math Facts
@@ -275,6 +275,6 @@ int main() {
     cout << "Total Incorrect: " << setw(4) << right << totalIncorrect << endl;
     cout << "Average Correct: " << setw(4) << right << ((totalCorrect * 100) / questionsVector.size()) << "%" << endl << endl;;
 
-    cout << "Thank you for using MathTutorV4 to study! V5 is coming soon!" << endl;
+    cout << "Thank you for using MathTutorV5 to study! V6 is coming soon!" << endl;
     return 0;
 }
