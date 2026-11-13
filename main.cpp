@@ -1,6 +1,6 @@
 /******************************************************************************************************************
  * Program......: MathTutorV5
- * Programmer(s): Treven Keen, Name 2
+ * Programmer(s): Treven Keen, Connor Colvard
  * Section(s)...: Section 3
  * Date.........: 2026-11-18
  * GitHub Repo..: https://github.com/KeenDevelopmentStudio/MathTutorV5
