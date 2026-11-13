@@ -25,6 +25,9 @@
 // Set Default Namespace
 using namespace std;
 
+// Declare Functions
+void DisplayGameIntro();
+
 int main() {
 
     // Initial Variables
@@ -61,24 +64,7 @@ int main() {
     int temp;
 
     // Title Display
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-    cout << R"(
-         __  __       _   _   _____      _           __     ______
-        |  \/  | __ _| |_| |_|_   _|   _| |_ ___  _ _\ \   / / ___|
-        | |\/| |/ _` | __| '_ \| || | | | __/ _ \| '__\ \ / /|___ \
-        | |  | | (_| | |_| | | | || |_| | || (_) | |   \ V /  ___) |
-        |_|  |_|\__,_|\__|_| |_|_| \__,_|\__\___/|_|    \_/  |____/ )" << endl << endl;
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-    cout << "*    Welcome to Version 5 of the Awesome Math Tutor!        *" << endl;
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-
-    // Math Facts
-    cout << "   Un-fun math rules:" << endl << endl;
-    cout << "* No fun allowed, only mathematical equations." << endl;
-    cout << "* Laughing results in weekend detention." << endl;
-    cout << "* You must recite 1000 digits of Pi numbers at the start of each class period." << endl;
-    cout << "* If it seems easy, you're wrong." << endl;
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+    DisplayGameIntro();
 
     //basic query to get user name
     cout << "Please enter your Username:" << endl;;
@@ -277,4 +263,30 @@ int main() {
 
     cout << "Thank you for using MathTutorV5 to study! V6 is coming soon!" << endl;
     return 0;
+} // End of main
+
+void DisplayGameIntro() {
+    /**************************************
+     * Display ASCII Title and Math Facts
+     **************************************/
+
+
+    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+    cout << R"(
+         __  __       _   _   _____      _           __     ______
+        |  \/  | __ _| |_| |_|_   _|   _| |_ ___  _ _\ \   / / ___|
+        | |\/| |/ _` | __| '_ \| || | | | __/ _ \| '__\ \ / /|___ \
+        | |  | | (_| | |_| | | | || |_| | || (_) | |   \ V /  ___) |
+        |_|  |_|\__,_|\__|_| |_|_| \__,_|\__\___/|_|    \_/  |____/ )" << endl << endl;
+    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+    cout << "*    Welcome to Version 5 of the Awesome Math Tutor!        *" << endl;
+    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+
+    // Math Facts
+    cout << "   Un-fun math rules:" << endl << endl;
+    cout << "* No fun allowed, only mathematical equations." << endl;
+    cout << "* Laughing results in weekend detention." << endl;
+    cout << "* You must recite 1000 digits of Pi numbers at the start of each class period." << endl;
+    cout << "* If it seems easy, you're wrong." << endl;
+    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
 }
