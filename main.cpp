@@ -28,7 +28,7 @@ using namespace std;
 // Declare Functions
 void DisplayGameIntro();
 string GetUserName();
-void GetNumericInput();
+int GetNumericValue();
 
 int main() {
 
@@ -133,6 +133,7 @@ int main() {
             cout << "what is the answer to " << leftNum << " " << mathOperator << " " << rightNum << "?" << endl;
 
             // Evaluate Response
+            GetNumericValue();
             /// Correct Answer
             if (userAnswer == correctAnswer) {
                 totalCorrect++; // Increase Correct Answer Counter
@@ -185,24 +186,7 @@ int main() {
         // Clears Lines From Input Buffer
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-        while (true) {
-            // Get Answer for Continue Question
-            getline(cin, userInput);
-
-            // Lowercase transition
-            for (int i = 0; i < userInput.size(); i++) {
-                userInput.at(i) = tolower(userInput.at(i));
-            }
-
-            // Decision based on answer
-            if (userInput == "yes" || userInput == "y" || userInput == "no" || userInput == "n") {
-            break;
-            }
-
-            cout << "Invalid input. Please enter a correct answer (y / yes || n / no): " << endl;
-        }
-
-    } while (userInput == "yes" || userInput == "y");
+        //Request Replay
 
     // Summary Report
     cout << setfill('*') << setw(34) << "*" << endl; // Make a Line
@@ -261,7 +245,6 @@ void DisplayGameIntro() {
      * Display ASCII Title and Math Facts
      **************************************/
 
-
     cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
     cout << R"(
          __  __       _   _   _____      _           __     ______
@@ -295,12 +278,15 @@ void DisplayGameIntro() {
     return userName;
 }
 
- void GetNumericValue(int userAnswer) {
-    userAnswer =  0;
+ int GetNumericValue() {
+    int userAnswer = 0;
+
     // Ensure Correct Answer Type (a number)
     while (!(cin >> userAnswer)) {
         cin.clear(); // Clear cin error flag
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
         cout << "Invalid input. Please enter a number: " << endl << endl;
+
+        return userAnswer;
     }
 }
