@@ -29,23 +29,24 @@ using namespace std;
 void DisplayGameIntro();
 string GetUserName();
 int GetNumericValue();
+string AskToPlayAgain();
+void DisplaySummaryReport(const vector<vector<int>> &questionsVector);
 
 int main() {
-
     // Initial Variables
     /// Constants
     const int maxAttempts = 3;
     const int LEVEL_RANGE_CHANGE = 10;
 
     /// THE VECTORRRRRR
-    vector<vector<int>> questionsVector;
+    vector<vector<int> > questionsVector;
 
     /// User's Input Strings
     string userName;
     string userInput = "?";
 
     /// Equation Type Variables
-    enum MathType {MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE};
+    enum MathType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
     char mathOperator;
 
     /// Math Equation Variables
@@ -67,6 +68,7 @@ int main() {
 
     // Title Display
     DisplayGameIntro();
+    // Get Username
     userName = GetUserName();
 
     // Set Seed
@@ -74,7 +76,6 @@ int main() {
 
     // Math Loop
     do {
-
         // Math Problem Variables
         leftNum = rand() % (currentRange) + 1;
         rightNum = rand() % (currentRange) + 1;
@@ -132,6 +133,8 @@ int main() {
             cout << "[Level #" << mathLevel << "] " << userName << ", ";
             cout << "what is the answer to " << leftNum << " " << mathOperator << " " << rightNum << "?" << endl;
 
+            userAnswer = GetNumericValue();
+
             // Evaluate Response
             GetNumericValue();
             /// Correct Answer
@@ -144,14 +147,15 @@ int main() {
 
             // Incorrect Answer
             else {
-                if (i == maxAttempts) { // Out of Math Question Attempts
+                if (i == maxAttempts) {
+                    // Out of Math Question Attempts
                     totalIncorrect++; // Increase Incorrect Answer Counter
                     rowVector.push_back(0);
                     cout << "You got it wrong. Disappointing." << endl;
                     cout << "The correct answer was: " << correctAnswer << endl;
                     cout << "You are a failure..." << endl;
-                }
-                else { // Still Has Math Question Attempts
+                } else {
+                    // Still Has Math Question Attempts
                     cout << "You got it wrong. Disappointing." << endl;
                     cout << "You have " << (maxAttempts - i) << " attempts left." << endl;
                 }
@@ -185,9 +189,119 @@ int main() {
 
         // Clears Lines From Input Buffer
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        while (true) {
+            // Get Answer for Continue Question
+            getline(cin, userInput);
 
-        //Request Replay
+            // Lowercase transition
+            for (int i = 0; i < userInput.size(); i++) {
+                userInput.at(i) = tolower(userInput.at(i));
+            }
 
+            userInput = AskToPlayAgain();
+
+            while (userInput == "yes" || userInput == "y");
+        }
+    }
+
+        DisplaySummaryReport(questionsVector);
+
+        cout << "Thank you for using MathTutorV5 to study! V6 is coming soon!" << endl;
+        return 0;
+    } // End of main
+}
+
+
+    void DisplayGameIntro() {
+        /**************************************
+         * Display ASCII Title and Math Facts
+         **************************************/
+
+        cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+        cout << R"(
+         __  __       _   _   _____      _           __     ______
+        |  \/  | __ _| |_| |_|_   _|   _| |_ ___  _ _\ \   / / ___|
+        | |\/| |/ _` | __| '_ \| || | | | __/ _ \| '__\ \ / /|___ \
+        | |  | | (_| | |_| | | | || |_| | || (_) | |   \ V /  ___) |
+        |_|  |_|\__,_|\__|_| |_|_| \__,_|\__\___/|_|    \_/  |____/ )" << endl << endl;
+        cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+        cout << "*    Welcome to Version 5 of the Awesome Math Tutor!        *" << endl;
+        cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+
+        // Math Facts
+        cout << "   Un-fun math rules:" << endl << endl;
+        cout << "* No fun allowed, only mathematical equations." << endl;
+        cout << "* Laughing results in weekend detention." << endl;
+        cout << "* You must recite 1000 digits of Pi numbers at the start of each class period." << endl;
+        cout << "* If it seems easy, you're wrong." << endl;
+        cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+    }
+
+    /********************************
+     *gets username
+     *****************************/
+    string GetUserName()
+    {
+        string userName = "?";
+
+        cout << "Please enter your Username:" << endl;;
+        getline(cin, userName);
+        cout << "Welcome to the Math Tutor " << userName << "!" << endl;
+
+        return userName;
+    }
+
+    //Prompt to get user's numeric answer
+    int GetNumericValue() {
+        int userAnswer = 0;
+
+        // Ensure Correct Answer Type (a number)
+        while (!(cin >> userAnswer)) {
+            cin.clear(); // Clear cin error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
+            cout << "Invalid input. Please enter a number: " << endl << endl;
+
+        }
+    return userAnswer;
+    }
+    // end of get numeric value funtion
+
+    // Ask to play again
+    string AskToPlayAgain() {
+        string userInput = "?";
+        while(true) {
+            // Get Answer for Continue Question
+            getline(cin, userInput);
+
+            // Lowercase transition
+            for (int i = 0; i < userInput.size(); i++) {
+                userInput.at(i) = tolower(userInput.at(i));
+            }
+
+            // Decision based on answer
+            if (userInput == "yes" || userInput == "y" || userInput == "no" || userInput == "n") {
+                break;
+            }
+
+            cout << "Invalid input. Please enter a correct answer (y / yes || n / no): " << endl;
+            cout << endl;
+        }
+    return userInput;
+    }
+
+    // End Play again function
+
+    // Start Summary Report Function
+    void DisplaySummaryReport (const vector<vector<int>> &questionsVector) {
+    // Generate Report
+    char mathOperator = 0;
+    int leftNum = 0;
+    int rightNum = 0;
+    int correctAnswer = 0;
+    int mathLevel = 1;
+    int totalCorrect = 0;
+    int totalIncorrect = 0;
+    int totalAttempts = 0;
     // Summary Report
     cout << setfill('*') << setw(34) << "*" << endl; // Make a Line
     cout << "         Summary Report" << endl;
@@ -236,57 +350,4 @@ int main() {
     cout << "Total Incorrect: " << setw(4) << right << totalIncorrect << endl;
     cout << "Average Correct: " << setw(4) << right << ((totalCorrect * 100) / questionsVector.size()) << "%" << endl << endl;;
 
-    cout << "Thank you for using MathTutorV5 to study! V6 is coming soon!" << endl;
-    return 0;
-} // End of main
-
-void DisplayGameIntro() {
-    /**************************************
-     * Display ASCII Title and Math Facts
-     **************************************/
-
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-    cout << R"(
-         __  __       _   _   _____      _           __     ______
-        |  \/  | __ _| |_| |_|_   _|   _| |_ ___  _ _\ \   / / ___|
-        | |\/| |/ _` | __| '_ \| || | | | __/ _ \| '__\ \ / /|___ \
-        | |  | | (_| | |_| | | | || |_| | || (_) | |   \ V /  ___) |
-        |_|  |_|\__,_|\__|_| |_|_| \__,_|\__\___/|_|    \_/  |____/ )" << endl << endl;
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-    cout << "*    Welcome to Version 5 of the Awesome Math Tutor!        *" << endl;
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-
-    // Math Facts
-    cout << "   Un-fun math rules:" << endl << endl;
-    cout << "* No fun allowed, only mathematical equations." << endl;
-    cout << "* Laughing results in weekend detention." << endl;
-    cout << "* You must recite 1000 digits of Pi numbers at the start of each class period." << endl;
-    cout << "* If it seems easy, you're wrong." << endl;
-    cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
-}
-/********************************
- *gets username
- *****************************/
-    string GetUserName() {
-
-    string userName = "?";
-
-    cout << "Please enter your Username:" << endl;;
-    getline(cin, userName);
-    cout << "Welcome to the Math Tutor " << userName << "!" << endl;
-
-    return userName;
-}
-
- int GetNumericValue() {
-    int userAnswer = 0;
-
-    // Ensure Correct Answer Type (a number)
-    while (!(cin >> userAnswer)) {
-        cin.clear(); // Clear cin error flag
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
-        cout << "Invalid input. Please enter a number: " << endl << endl;
-
-        return userAnswer;
     }
-}
