@@ -27,6 +27,8 @@ using namespace std;
 
 // Declare Functions
 void DisplayGameIntro();
+string GetUserName();
+void GetNumericInput();
 
 int main() {
 
@@ -39,7 +41,7 @@ int main() {
     vector<vector<int>> questionsVector;
 
     /// User's Input Strings
-    string username;
+    string userName;
     string userInput = "?";
 
     /// Equation Type Variables
@@ -65,11 +67,7 @@ int main() {
 
     // Title Display
     DisplayGameIntro();
-
-    //basic query to get user name
-    cout << "Please enter your Username:" << endl;;
-    getline(cin, username);
-    cout << "Welcome to the Math Tutor " << username << "!" << endl;
+    userName = GetUserName();
 
     // Set Seed
     srand(time(0));
@@ -131,15 +129,8 @@ int main() {
 
         // Request Math Answer
         for (int i = 0; i <= maxAttempts; i++) {
-            cout << "[Level #" << mathLevel << "] " << username << ", ";
+            cout << "[Level #" << mathLevel << "] " << userName << ", ";
             cout << "what is the answer to " << leftNum << " " << mathOperator << " " << rightNum << "?" << endl;
-
-            // Ensure Correct Answer Type
-            while (!(cin >> userAnswer)) {
-                cin.clear(); // Clear cin error flag
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
-                cout << "Invalid input. Please enter a number: " << endl << endl;
-            }
 
             // Evaluate Response
             /// Correct Answer
@@ -289,4 +280,27 @@ void DisplayGameIntro() {
     cout << "* You must recite 1000 digits of Pi numbers at the start of each class period." << endl;
     cout << "* If it seems easy, you're wrong." << endl;
     cout << setfill('*') << setw(78) << "*" << endl; // Make a Line
+}
+/********************************
+ *gets username
+ *****************************/
+    string GetUserName() {
+
+    string userName = "?";
+
+    cout << "Please enter your Username:" << endl;;
+    getline(cin, userName);
+    cout << "Welcome to the Math Tutor " << userName << "!" << endl;
+
+    return userName;
+}
+
+ void GetNumericValue(int userAnswer) {
+    userAnswer =  0;
+    // Ensure Correct Answer Type (a number)
+    while (!(cin >> userAnswer)) {
+        cin.clear(); // Clear cin error flag
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
+        cout << "Invalid input. Please enter a number: " << endl << endl;
+    }
 }
