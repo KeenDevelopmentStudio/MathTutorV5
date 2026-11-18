@@ -28,6 +28,7 @@ void DisplayGameIntro();
 string GetUserName();
 int GetNumericValue();
 bool GiveThreeAttempts(string userName, vector<int> &currentQuestion);
+void CheckForLevelChange( )
 string AskToPlayAgain();
 void DisplaySummaryReport(const vector<vector<int>> &questionsVector);
 
@@ -144,26 +145,8 @@ int main() {
 
         // Updating Questions Vector
         AllQuestions.push_back(CurrentQuestion);
-        // Leveling Up mathLevel
-        if (totalCorrect >= 3) {
-            mathLevel++; // Increase Level by 1
-            totalCorrect = 0; // Reset Correct Count
-            totalIncorrect = 0; // Reset Incorrect Count
-            currentRange += LEVEL_RANGE_CHANGE; // Update Range to Match Level
-            cout << "You have risen to Math Level " << mathLevel << endl;
-            cout << "Your new range is 0 - " << currentRange << endl;
-        }
 
-        // Leveling Down mathLevel
-        else if (totalIncorrect >= 3 && mathLevel > 1) {
-            mathLevel--; // Decrease Level by 1
-            totalCorrect = 0; // Reset Correct Count
-            totalIncorrect = 0; // Reset Incorrect Count
-            currentRange -= LEVEL_RANGE_CHANGE; // Update Range to Match LevelK
-            cout << "You have fallen to Math Level " << mathLevel << endl;
-            cout << "Your new range is 0 - " << currentRange << endl;
-        }
-
+        CheckForLevelChange(totalCorrect )
         // Request Additional Questions
         cout << "Would you like to continue? (y / yes || n / no): " << endl;
 
@@ -276,6 +259,32 @@ int GetNumericValue() {
         }
             return isCorrect;
     }
+
+void CheckForLevelChange(int &totalCorrect, int &totalIncorrect, int &mathLevel) {
+    // Leveling Up mathLevel
+    currentRange = 10;
+
+    if (totalCorrect >= 3) {
+        mathLevel++; // Increase Level by 1
+        totalCorrect = 0; // Reset Correct Count
+        totalIncorrect = 0; // Reset Incorrect Count
+        currentRange += LEVEL_RANGE_CHANGE; // Update Range to Match Level
+        cout << "You have risen to Math Level " << (mathLevel + Level_Range_Change) << endl;
+        cout << "Your new range is 0 - " << currentRange << endl;
+    }
+
+    // Leveling Down mathLevel
+    else if (totalIncorrect >= 3 && mathLevel > 1) {
+        mathLevel--; // Decrease Level by 1
+        totalCorrect = 0; // Reset Correct Count
+        totalIncorrect = 0; // Reset Incorrect Count
+        currentRange -= LEVEL_RANGE_CHANGE; // Update Range to Match LevelK
+        cout << "You have fallen to Math Level " << mathLevel << endl;
+        cout << "Your new range is 0 - " << currentRange << endl;
+    }
+
+}
+
 
 string AskToPlayAgain() {
     string userInput = "?";
