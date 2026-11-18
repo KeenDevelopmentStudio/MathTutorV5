@@ -27,6 +27,7 @@ using namespace std;
 void DisplayGameIntro();
 string GetUserName();
 int GetNumericValue();
+bool GiveThreeAttempts(string userName, vector<int> currentQuestion);
 string AskToPlayAgain();
 void DisplaySummaryReport(const vector<vector<int>> &questionsVector);
 
@@ -138,28 +139,12 @@ int main() {
             // Ensure Correct Answer Type (a number)
             userAnswer = GetNumericValue();
 
-            /// Correct Answer
-            if (userAnswer == correctAnswer) {
-                totalCorrect++; // Increase Correct Answer Counter
-                CurrentQuestion.push_back(i + 1);
-                cout << "You got it right. Good!" << endl;
-                break;
-            }
+            bool isCorrect = GiveThreeAttempts(userName, CurrentQuestion);
 
-            // Incorrect Answer
-            if (i == maxAttempts) {
-                // Out of Math Question Attempts
-                totalIncorrect++; // Increase Incorrect Answer Counter
-                CurrentQuestion.push_back(0);
-                cout << "You got it wrong. Disappointing." << endl;
-                cout << "The correct answer was: " << correctAnswer << endl;
-                cout << "You are a failure..." << endl;
-            } else {
-                // Still Has Math Question Attempts
-                cout << "You got it wrong. Disappointing." << endl;
-                cout << "You have " << (maxAttempts - i) << " attempts left." << endl;
-            }
-        }
+            if (isCorrect)
+                totalCorrect++;
+            else
+                totalIncorrect++;
 
         // Updating Questions Vector
         AllQuestions.push_back(CurrentQuestion);
@@ -254,6 +239,50 @@ int GetNumericValue() {
     }
     return userAnswer;
 }
+    // Use a forloop to give them three attempts
+
+    bool GiveThreeAttempts(string userName, vector<int> &currentQuestion) {
+        int userAnswer = 0;
+        bool isCorrect = false;
+
+        // Extract Data from Vector
+        int mathLevel = currentQuestion.at(0);
+        int leftNum = currentQuestion.at(1);
+        char mathOperator = static_cast<char>(currentQuestion.at(2));
+        int rightNum = currentQuestion.at(3);
+        int correctAnswer = currentQuestion.at(4);
+
+        // Request Math Answer
+        for (int i = 0; i <= maxAttempts; i++) {
+            cout << "[Level #" << mathLevel << "] " << userName << ", ";
+            cout << "what is the answer to " << leftNum << " " << mathOperator << " " << rightNum << "?" << endl;
+
+
+            /// Correct Answer
+            if (userAnswer == correctAnswer) {
+                totalCorrect++; // Increase Correct Answer Counter
+                CurrentQuestion.push_back(i + 1);
+                cout << "You got it right. Good!" << endl;
+                break;
+            }
+
+            // Incorrect Answer
+            if (i == maxAttempts) {
+                // Out of Math Question Attempts
+                totalIncorrect++; // Increase Incorrect Answer Counter
+                CurrentQuestion.push_back(0);
+                cout << "You got it wrong. Disappointing." << endl;
+                cout << "The correct answer was: " << correctAnswer << endl;
+                cout << "You are a failure..." << endl;
+            } else {
+                // Still Has Math Question Attempts
+                cout << "You got it wrong. Disappointing." << endl;
+                cout << "You have " << (maxAttempts - i) << " attempts left." << endl;
+            }
+            return isCorrect;
+        }
+    }
+
 string AskToPlayAgain() {
     string userInput = "?";
     while(true) {
@@ -334,4 +363,3 @@ string AskToPlayAgain() {
     cout << "Average Correct: " << setw(4) << right << ((totalCorrect * 100) / questionsVector.size()) << "%" << endl << endl;;
 
     }
-
