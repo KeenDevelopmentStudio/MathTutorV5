@@ -28,7 +28,7 @@ void DisplayGameIntro();
 string GetUserName();
 int GetNumericValue();
 bool GiveThreeAttempts(string userName, vector<int> &currentQuestion);
-void CheckForLevelChange( )
+void CheckForLevelChange(int &totalCorrect, int &totalIncorrect, int &mathLevel);
 string AskToPlayAgain();
 void DisplaySummaryReport(const vector<vector<int>> &questionsVector);
 
@@ -146,7 +146,7 @@ int main() {
         // Updating Questions Vector
         AllQuestions.push_back(CurrentQuestion);
 
-        CheckForLevelChange(totalCorrect )
+        CheckForLevelChange(totalCorrect, totalIncorrect, mathLevel);
         // Request Additional Questions
         cout << "Would you like to continue? (y / yes || n / no): " << endl;
 
