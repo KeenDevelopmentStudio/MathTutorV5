@@ -30,14 +30,17 @@ int GetNumericValue();
 string AskToPlayAgain();
 void DisplaySummaryReport(const vector<vector<int>> &questionsVector);
 
-int main() {
-    // Initial Variables
-    /// Constants
-    const int maxAttempts = 3;
-    const int LEVEL_RANGE_CHANGE = 10;
+// Initial Variables
+/// Constants
+const int maxAttempts = 3;
+const int LEVEL_RANGE_CHANGE = 10;
 
+/// Equation Type Variables
+enum MathType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
+
+int main() {
     /// THE VECTORRRRRR
-    vector<vector<int> > questionsVector;
+    vector<vector<int> > AllQuestions;
 
     /// User's Input Strings
     string userName;
@@ -125,7 +128,7 @@ int main() {
                 return -1;
         }
         // Declare 1D vector
-        vector<int> rowVector = {mathLevel, leftNum, mathOperator, rightNum, correctAnswer};
+        vector<int> CurrentQuestion = {mathLevel, leftNum, mathOperator, rightNum, correctAnswer};
 
         // Request Math Answer
         for (int i = 0; i <= maxAttempts; i++) {
@@ -138,7 +141,7 @@ int main() {
             /// Correct Answer
             if (userAnswer == correctAnswer) {
                 totalCorrect++; // Increase Correct Answer Counter
-                rowVector.push_back(i + 1);
+                CurrentQuestion.push_back(i + 1);
                 cout << "You got it right. Good!" << endl;
                 break;
             }
@@ -147,7 +150,7 @@ int main() {
             if (i == maxAttempts) {
                 // Out of Math Question Attempts
                 totalIncorrect++; // Increase Incorrect Answer Counter
-                rowVector.push_back(0);
+                CurrentQuestion.push_back(0);
                 cout << "You got it wrong. Disappointing." << endl;
                 cout << "The correct answer was: " << correctAnswer << endl;
                 cout << "You are a failure..." << endl;
@@ -159,7 +162,7 @@ int main() {
         }
 
         // Updating Questions Vector
-        questionsVector.push_back(rowVector);
+        AllQuestions.push_back(CurrentQuestion);
         // Leveling Up mathLevel
         if (totalCorrect >= 3) {
             mathLevel++; // Increase Level by 1
@@ -192,7 +195,7 @@ int main() {
         } while (userInput == "yes" || userInput == "y");
 
 
-        DisplaySummaryReport(questionsVector);
+        DisplaySummaryReport(AllQuestions);
 
             cout << "Thank you for using MathTutorV5 to study! V6 is coming soon!" << endl;
             return 0;
