@@ -214,7 +214,6 @@ int GetNumericValue() {
         cin.clear(); // Clear cin error flag
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
         cout << "Invalid input. Please enter a number: " << endl << endl;
-
     }
     return userAnswer;
 }
@@ -241,6 +240,7 @@ int GetNumericValue() {
             if (userAnswer == correctAnswer) {
                 currentQuestion.push_back(i + 1);
                 cout << "You got it right. Good!" << endl;
+                isCorrect = true;
                 break;
             }
 
@@ -251,7 +251,9 @@ int GetNumericValue() {
                 cout << "You got it wrong. Disappointing." << endl;
                 cout << "The correct answer was: " << correctAnswer << endl;
                 cout << "You are a failure..." << endl;
-            } else {
+                isCorrect = false;
+            }
+            else {
                 // Still Has Math Question Attempts
                 cout << "You got it wrong. Disappointing." << endl;
                 cout << "You have " << (maxAttempts - i) << " attempts left." << endl;
