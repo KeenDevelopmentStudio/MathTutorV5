@@ -262,14 +262,14 @@ int GetNumericValue() {
 
 void CheckForLevelChange(int &totalCorrect, int &totalIncorrect, int &mathLevel) {
     // Leveling Up mathLevel
-    currentRange = 10;
+    int currentRange = 10;
 
     if (totalCorrect >= 3) {
         mathLevel++; // Increase Level by 1
         totalCorrect = 0; // Reset Correct Count
         totalIncorrect = 0; // Reset Incorrect Count
         currentRange += LEVEL_RANGE_CHANGE; // Update Range to Match Level
-        cout << "You have risen to Math Level " << (mathLevel + Level_Range_Change) << endl;
+        cout << "You have risen to Math Level " << (mathLevel + LEVEL_RANGE_CHANGE) << endl;
         cout << "Your new range is 0 - " << currentRange << endl;
     }
 
