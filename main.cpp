@@ -27,7 +27,7 @@ using namespace std;
 void DisplayGameIntro();
 string GetUserName();
 int GetNumericValue();
-bool GiveThreeAttempts(string userName, vector<int> currentQuestion);
+bool GiveThreeAttempts(string userName, vector<int> &currentQuestion);
 string AskToPlayAgain();
 void DisplaySummaryReport(const vector<vector<int>> &questionsVector);
 
@@ -131,10 +131,6 @@ int main() {
         // Declare 1D vector
         vector<int> CurrentQuestion = {mathLevel, leftNum, mathOperator, rightNum, correctAnswer};
 
-        // Request Math Answer
-        for (int i = 0; i <= maxAttempts; i++) {
-            cout << "[Level #" << mathLevel << "] " << userName << ", ";
-            cout << "what is the answer to " << leftNum << " " << mathOperator << " " << rightNum << "?" << endl;
 
             // Ensure Correct Answer Type (a number)
             userAnswer = GetNumericValue();
@@ -260,8 +256,7 @@ int GetNumericValue() {
 
             /// Correct Answer
             if (userAnswer == correctAnswer) {
-                totalCorrect++; // Increase Correct Answer Counter
-                CurrentQuestion.push_back(i + 1);
+                currentQuestion.push_back(i + 1);
                 cout << "You got it right. Good!" << endl;
                 break;
             }
@@ -269,8 +264,7 @@ int GetNumericValue() {
             // Incorrect Answer
             if (i == maxAttempts) {
                 // Out of Math Question Attempts
-                totalIncorrect++; // Increase Incorrect Answer Counter
-                CurrentQuestion.push_back(0);
+                currentQuestion.push_back(0);
                 cout << "You got it wrong. Disappointing." << endl;
                 cout << "The correct answer was: " << correctAnswer << endl;
                 cout << "You are a failure..." << endl;
@@ -279,8 +273,8 @@ int GetNumericValue() {
                 cout << "You got it wrong. Disappointing." << endl;
                 cout << "You have " << (maxAttempts - i) << " attempts left." << endl;
             }
-            return isCorrect;
         }
+            return isCorrect;
     }
 
 string AskToPlayAgain() {
