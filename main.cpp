@@ -28,7 +28,7 @@ using namespace std;
 // Define Functions
 void DisplayGameIntro();
 string GetUserName();
-vector<int> GenerateRandomQuestion(int MathLevel);
+vector<int> GenerateRandomQuestion(int MathLevel, string UserName);
 int GetNumericValue();
 bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion);
 void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel);
@@ -70,7 +70,7 @@ int main() {
     do {
         cout << endl;
 
-        vector<int> CurrentQuestion = GenerateRandomQuestion(MathLevel);
+        vector<int> CurrentQuestion = GenerateRandomQuestion(MathLevel, UserName);
 
         // Ensure Correct Answer Type (a number)
         UserAnswer = GetNumericValue();
@@ -144,7 +144,7 @@ string GetUserName() {
 }
 
 // Generates 3 random numbers for questions
-vector<int> GenerateRandomQuestion(int MathLevel) {
+vector<int> GenerateRandomQuestion(int MathLevel, string UserName) {
     /// Math Equation Variables
     enum MathOperatorType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
     int LeftNum;
@@ -209,6 +209,11 @@ vector<int> GenerateRandomQuestion(int MathLevel) {
             cout << "Please report this problem to the developers." << endl;
             exit (-1); //ends program due to error
     }
+
+    // State Math Question
+    cout << "[Level #" << MathLevel << "] " << UserName << ", ";
+    cout << "what is the answer to " << LeftNum << " " << MathOperator << " " << RightNum << "?" << endl;
+
     // Declare 1D vector
     vector<int> CurrentQuestion = {MathLevel, LeftNum, MathOperator, RightNum, CorrectAnswer};
     return CurrentQuestion;
@@ -240,9 +245,6 @@ bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion) {
 
     // Request Math Answer
     for (int i = 0; i <= MaxAttempts; i++) {
-        cout << "[Level #" << MathLevel << "] " << UserName << ", ";
-        cout << "what is the answer to " << LeftNum << " " << MathOperator << " " << RightNum << "?" << endl;
-
 
         /// Correct Answer
         if (UserAnswer == CorrectAnswer) {
