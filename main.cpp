@@ -9,7 +9,7 @@
     It will also tell them some math fun facts and present them with some cool ASCII art.
     They will be asked random math questions.
     These questions will get easier or harder based on performance.
-    This program will now save answers and questions to display at the end.
+    This program will save answers and questions to display at the end.
  *****************************************************************************************************************/
 
 // Include Libraries

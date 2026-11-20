@@ -3,33 +3,38 @@
 <b>Table of Content</b>
 - [Summary](#summary)
 - [Maintainers](#maintainers)
+- [New Features](#New-Features)
 - [New Concepts Used](#new-concepts-used)
+- [Functions Used](#Functions-Used)
 - [Console Output Example](#console-output-example)
 
 ## Summary
-This is the fourth iteration of the MathTutor program. In this update, we added these features:
-- Storing answers and questions in a table
-- This table is then revealed at the end
-- You can see what questions you answered and how you did
-
+This is the fifth iteration of the MathTutor program that asks the user basic math questions and 
+displays a summary report detailing the user's performance.
 
 ## Maintainers
-[@KeenDevelopmentStudio](https://github.com/KeenDevelopmentStudio) Treven Keen
+[@KeenDevelopmentStudio](https://github.com/KeenDevelopmentStudio) Treven Keen  
 [@RCJColvard-dot](https://github.com/RCJColvard-dot) Connor Colvard
 
+## New Features
+ - Divided Main into smaller functions.
+ - Stored prototypes in a header file.
+ - Stored all functions (except main) in a matching source file.
 
 ## New Concepts Used
-  - Vectors for storing data
-      - Vectors allow for a list of items to be stored in varying amounts.
-  - 2D Vectors to store tables of data
-      - 2D Vectors could hold even more like a table.
-  - Data extraction from vectors to make a summary report
-      - The data in a Vector can be called upon at any time.
-  - Setfill line generation
-      - This gave us easier and faster ways of making lines.
-  - Text Alignment
-      - This gave us more organization and room for better visuals
-  
+  - Functions (return type, parameters, arguments, pass by value)
+  - Header file and prototypes
+  - Source file
+
+## Functions Used
+  - void DisplayGameIntro();
+  - string GetUserName();
+  - vector GenerateRandomNumber(int mathLevel);
+  - int GetNumericValue
+  - bool GiveThreeAttempts(vector &currentQuestion);
+  - void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int & MathLevel)
+  - string AskToPlayAgain(); 
+  - void DisplaySummaryReport(const vector<vector<int> > &QuestionsVector);
 
 ## Console Output Testing Example
 
