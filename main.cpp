@@ -25,64 +25,43 @@
 // Set Default Namespace
 using namespace std;
 
+// Define Functions
 void DisplayGameIntro();
-
 string GetUserName();
-
-vector<int> GenerateRandomQuestion(int mathLevel);
-
+vector<int> GenerateRandomQuestion(int MathLevel);
 int GetNumericValue();
-
-bool GiveThreeAttempts(string userName, vector<int> &currentQuestion);
-
-void CheckForLevelChange(int &totalCorrect, int &totalIncorrect, int &mathLevel);
-
+bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion);
+void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel);
 string AskToPlayAgain();
-
-void DisplaySummaryReport(const vector<vector<int> > &questionsVector);
+void DisplaySummaryReport(const vector<vector<int> > &QuestionsVector);
 
 // Initial Variables
 /// Constants
-const int maxAttempts = 3;
+const int MaxAttempts = 3;
 const int LEVEL_RANGE_CHANGE = 10;
-
-/// Equation Type Variables
-enum MathType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
+int UserAnswer = 0;
 
 int main() {
     /// THE VECTORRRRRR
     vector<vector<int> > AllQuestions;
 
     /// User's Input Strings
-    string userName;
-    string userInput = "?";
+    string UserName;
+    string UserInput = "?";
 
     /// Equation Type Variables
     enum MathType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
-    char mathOperator;
-
-    /// Math Equation Variables
-    int leftNum;
-    int rightNum;
-    int mathType;
-    int correctAnswer;
 
     /// Math Leveling Variables
-    int mathLevel = 1;
-    int currentRange = 10;
-    int totalCorrect = 0;
-    int totalIncorrect = 0;
-    int totalAttempts = 0;
-
-    /// Answer and Temporary Storage
-    int userAnswer;
-    int temp;
+    int MathLevel = 1;
+    int TotalCorrect = 0;
+    int TotalIncorrect = 0;
 
     // Title Display
     DisplayGameIntro();
 
     // Get Username
-    userName = GetUserName();
+    UserName = GetUserName();
 
     // Set Seed
     srand(time(0));
@@ -91,22 +70,22 @@ int main() {
     do {
         cout << endl;
 
-        vector<int> currentQuestion = GenerateRandomQuestion(mathLevel);
+        vector<int> CurrentQuestion = GenerateRandomQuestion(MathLevel);
 
         // Ensure Correct Answer Type (a number)
-        userAnswer = GetNumericValue();
+        UserAnswer = GetNumericValue();
 
-        bool isCorrect = GiveThreeAttempts(userName, CurrentQuestion);
+        bool IsCorrect = GiveThreeAttempts(UserName, CurrentQuestion);
 
-        if (isCorrect)
-            totalCorrect++;
+        if (IsCorrect)
+            TotalCorrect++;
         else
-            totalIncorrect++;
+            TotalIncorrect++;
 
         // Updating Questions Vector
         AllQuestions.push_back(CurrentQuestion);
 
-        CheckForLevelChange(totalCorrect, totalIncorrect, mathLevel);
+        CheckForLevelChange(TotalCorrect, TotalIncorrect, MathLevel);
         // Request Additional Questions
         cout << "Would you like to continue? (y / yes || n / no): " << endl;
 
@@ -114,8 +93,8 @@ int main() {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 
-        userInput = AskToPlayAgain();
-    } while (userInput == "yes" || userInput == "y");
+        UserInput = AskToPlayAgain();
+    } while (UserInput == "yes" || UserInput == "y");
 
 
     DisplaySummaryReport(AllQuestions);
@@ -155,198 +134,198 @@ void DisplayGameIntro() {
  *gets username
  *****************************/
 string GetUserName() {
-    string userName = "?";
+    string UserName = "?";
 
     cout << "Please enter your Username:" << endl;;
-    getline(cin, userName);
-    cout << "Welcome to the Math Tutor " << userName << "!" << endl;
+    getline(cin, UserName);
+    cout << "Welcome to the Math Tutor " << UserName << "!" << endl;
 
-    return userName;
+    return UserName;
 }
 
 // Generates 3 random numbers for questions
-vector<int> GenerateRandomQuestions() {
+vector<int> GenerateRandomQuestion(int MathLevel) {
     /// Math Equation Variables
-    enum MathType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
-    int leftNum;
-    int rightNum;
-    int mathType;
-    int correctAnswer;
-    char mathOperator;
+    enum MathOperatorType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
+    int LeftNum;
+    int RightNum;
+    int MathType;
+    int CorrectAnswer;
+    char MathOperator;
 
 
     /// Math Leveling Variables
-    int mathLevel = 1;
-    int currentRange = mathLevel + LEVEL_RANGE_CHANGE;
+    int CurrentRange = MathLevel + LEVEL_RANGE_CHANGE;
 
     /// Answer and Temporary Storage
-    int temp;
+    int Temp;
 
     // Math Problem Variables
-    leftNum = rand() % (currentRange) + 1;
-    rightNum = rand() % (currentRange) + 1;
+    LeftNum = rand() % (CurrentRange) + 1;
+    RightNum = rand() % (CurrentRange) + 1;
 
     // Math Operator Choosing
-    mathType = static_cast<MathType>(rand() % 4);
+    MathType = static_cast<MathOperatorType>(rand() % 4);
 
     // Switch
-    switch (mathType) {
+    switch (MathType) {
         case MT_ADD:
             // Addition
-            mathOperator = '+';
-            correctAnswer = leftNum + rightNum;
+            MathOperator = '+';
+            CorrectAnswer = LeftNum + RightNum;
             break;
 
         case MT_SUBTRACT:
             // Subtraction
-            mathOperator = '-';
+            MathOperator = '-';
 
             // Left Number must be greater than Right Number
-            if (leftNum < rightNum) {
-                temp = leftNum;
-                leftNum = rightNum;
-                rightNum = temp;
+            if (LeftNum < RightNum) {
+                Temp = LeftNum;
+                LeftNum = RightNum;
+                RightNum = Temp;
             }
-            correctAnswer = leftNum - rightNum;
+            CorrectAnswer = LeftNum - RightNum;
             break;
 
         case MT_MULTIPLY:
             // Multiplication
-            mathOperator = 'x';
-            correctAnswer = leftNum * rightNum;
+            MathOperator = 'x';
+            CorrectAnswer = LeftNum * RightNum;
             break;
 
         case MT_DIVIDE:
             // Division
             /// No Fractions Allowed
-            mathOperator = '/';
-            correctAnswer = leftNum; // Set Correct Answer to Old Left Number
-            leftNum *= rightNum; // Set New Left Number to Dividend and Right Number to Divisor
+            MathOperator = '/';
+            CorrectAnswer = LeftNum; // Set Correct Answer to Old Left Number
+            LeftNum *= RightNum; // Set New Left Number to Dividend and Right Number to Divisor
             break;
 
         default:
             // Error Handling
-            cout << "Invalid question type: " << mathType << endl;
+            cout << "Invalid question type: " << MathType << endl;
             cout << "Program ended with an error -1" << endl;
             cout << "Please report this problem to the developers." << endl;
             exit (-1); //ends program due to error
     }
     // Declare 1D vector
-    vector<int> CurrentQuestion = {mathLevel, leftNum, mathOperator, rightNum, correctAnswer};
+    vector<int> CurrentQuestion = {MathLevel, LeftNum, MathOperator, RightNum, CorrectAnswer};
+    return CurrentQuestion;
 }
 int GetNumericValue() {
-    int userAnswer = 0;
+    int UserAnswer = 0;
 
     // Ensure Correct Answer Type (a number)
-    while (!(cin >> userAnswer)) {
+    while (!(cin >> UserAnswer)) {
         cin.clear(); // Clear cin error flag
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore Max Input up to \n
         cout << "Invalid input. Please enter a number: " << endl << endl;
     }
-    return userAnswer;
+    return UserAnswer;
 }
 
 // Use a forloop to give them three attempts
 
-bool GiveThreeAttempts(string userName, vector<int> &currentQuestion) {
-    int userAnswer = 0;
-    bool isCorrect = false;
+bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion) {
+    int UserAnswer = 0;
+    bool IsCorrect = false;
 
     // Extract Data from Vector
-    int mathLevel = currentQuestion.at(0);
-    int leftNum = currentQuestion.at(1);
-    char mathOperator = static_cast<char>(currentQuestion.at(2));
-    int rightNum = currentQuestion.at(3);
-    int correctAnswer = currentQuestion.at(4);
+    int MathLevel = CurrentQuestion.at(0);
+    int LeftNum = CurrentQuestion.at(1);
+    char MathOperator = static_cast<char>(CurrentQuestion.at(2));
+    int RightNum = CurrentQuestion.at(3);
+    int CorrectAnswer = CurrentQuestion.at(4);
 
     // Request Math Answer
-    for (int i = 0; i <= maxAttempts; i++) {
-        cout << "[Level #" << mathLevel << "] " << userName << ", ";
-        cout << "what is the answer to " << leftNum << " " << mathOperator << " " << rightNum << "?" << endl;
+    for (int i = 0; i <= MaxAttempts; i++) {
+        cout << "[Level #" << MathLevel << "] " << UserName << ", ";
+        cout << "what is the answer to " << LeftNum << " " << MathOperator << " " << RightNum << "?" << endl;
 
 
         /// Correct Answer
-        if (userAnswer == correctAnswer) {
-            currentQuestion.push_back(i + 1);
+        if (UserAnswer == CorrectAnswer) {
+            CurrentQuestion.push_back(i + 1);
             cout << "You got it right. Good!" << endl;
-            isCorrect = true;
+            IsCorrect = true;
             break;
         }
 
         // Incorrect Answer
-        if (i == maxAttempts) {
+        if (i == MaxAttempts) {
             // Out of Math Question Attempts
-            currentQuestion.push_back(0);
+            CurrentQuestion.push_back(0);
             cout << "You got it wrong. Disappointing." << endl;
-            cout << "The correct answer was: " << correctAnswer << endl;
+            cout << "The correct answer was: " << CorrectAnswer << endl;
             cout << "You are a failure..." << endl;
-            isCorrect = false;
+            IsCorrect = false;
         } else {
             // Still Has Math Question Attempts
             cout << "You got it wrong. Disappointing." << endl;
-            cout << "You have " << (maxAttempts - i) << " attempts left." << endl;
+            cout << "You have " << (MaxAttempts - i) << " attempts left." << endl;
         }
     }
-    return isCorrect;
+    return IsCorrect;
 }
 
-void CheckForLevelChange(int &totalCorrect, int &totalIncorrect, int &mathLevel) {
+void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel) {
     // Leveling Up mathLevel
-    int currentRange = 10;
+    int CurrentRange = 10;
 
-    if (totalCorrect >= 3) {
-        mathLevel++; // Increase Level by 1
-        totalCorrect = 0; // Reset Correct Count
-        totalIncorrect = 0; // Reset Incorrect Count
-        currentRange += LEVEL_RANGE_CHANGE; // Update Range to Match Level
-        cout << "You have risen to Math Level " << (mathLevel + LEVEL_RANGE_CHANGE) << endl;
-        cout << "Your new range is 0 - " << currentRange << endl;
+    if (TotalCorrect >= 3) {
+        MathLevel++; // Increase Level by 1
+        TotalCorrect = 0; // Reset Correct Count
+        TotalIncorrect = 0; // Reset Incorrect Count
+        CurrentRange += LEVEL_RANGE_CHANGE; // Update Range to Match Level
+        cout << "You have risen to Math Level " << (MathLevel + LEVEL_RANGE_CHANGE) << endl;
+        cout << "Your new range is 0 - " << CurrentRange << endl;
     }
 
     // Leveling Down mathLevel
-    else if (totalIncorrect >= 3 && mathLevel > 1) {
-        mathLevel--; // Decrease Level by 1
-        totalCorrect = 0; // Reset Correct Count
-        totalIncorrect = 0; // Reset Incorrect Count
-        currentRange -= LEVEL_RANGE_CHANGE; // Update Range to Match LevelK
-        cout << "You have fallen to Math Level " << mathLevel << endl;
-        cout << "Your new range is 0 - " << currentRange << endl;
+    else if (TotalIncorrect >= 3 && MathLevel > 1) {
+        MathLevel--; // Decrease Level by 1
+        TotalCorrect = 0; // Reset Correct Count
+        TotalIncorrect = 0; // Reset Incorrect Count
+        CurrentRange -= LEVEL_RANGE_CHANGE; // Update Range to Match LevelK
+        cout << "You have fallen to Math Level " << MathLevel << endl;
+        cout << "Your new range is 0 - " << CurrentRange << endl;
     }
 }
 
 
 string AskToPlayAgain() {
-    string userInput = "?";
+    string UserInput = "?";
     while (true) {
         // Get Answer for Continue Question
-        getline(cin, userInput);
+        getline(cin, UserInput);
 
         // Lowercase transition
-        for (int i = 0; i < userInput.size(); i++) {
-            userInput.at(i) = tolower(userInput.at(i));
+        for (int i = 0; i < UserInput.size(); i++) {
+            UserInput.at(i) = tolower(UserInput.at(i));
         }
 
         // Decision based on answer
-        if (userInput == "yes" || userInput == "y" || userInput == "no" || userInput == "n") {
+        if (UserInput == "yes" || UserInput == "y" || UserInput == "no" || UserInput == "n") {
             break;
         }
 
         cout << "Invalid input. Please enter a correct answer (y / yes || n / no): " << endl;
         cout << endl;
     }
-    return userInput;
+    return UserInput;
 }
 
-void DisplaySummaryReport(const vector<vector<int> > &questionsVector) {
+void DisplaySummaryReport(const vector<vector<int> > &QuestionsVector) {
     // Generate Report
-    char mathOperator = 0;
-    int leftNum = 0;
-    int rightNum = 0;
-    int correctAnswer = 0;
-    int mathLevel = 1;
-    int totalCorrect = 0;
-    int totalIncorrect = 0;
-    int totalAttempts = 0;
+    char MathOperator = 0;
+    int LeftNum = 0;
+    int RightNum = 0;
+    int CorrectAnswer = 0;
+    int MathLevel = 1;
+    int TotalCorrect = 0;
+    int TotalIncorrect = 0;
+    int TotalAttempts = 0;
     // Summary Report
     cout << setfill('*') << setw(34) << "*" << endl; // Make a Line
     cout << "         Summary Report" << endl;
@@ -356,41 +335,41 @@ void DisplaySummaryReport(const vector<vector<int> > &questionsVector) {
     cout << setfill(' '); // Reset setfill()
 
     // Reset Counters
-    totalCorrect = 0;
-    totalIncorrect = 0;
+    TotalCorrect = 0;
+    TotalIncorrect = 0;
 
     // Generate Report
-    for (int i = 0; i < questionsVector.size(); i++) {
+    for (int i = 0; i < QuestionsVector.size(); i++) {
         // Extract Data from Vector
-        mathLevel = questionsVector.at(i).at(0);
-        leftNum = questionsVector.at(i).at(1);
-        mathOperator = static_cast<char>(questionsVector.at(i).at(2));
-        rightNum = questionsVector.at(i).at(3);
-        correctAnswer = questionsVector.at(i).at(4);
-        totalAttempts = questionsVector.at(i).at(5);
+        MathLevel = QuestionsVector.at(i).at(0);
+        LeftNum = QuestionsVector.at(i).at(1);
+        MathOperator = static_cast<char>(QuestionsVector.at(i).at(2));
+        RightNum = QuestionsVector.at(i).at(3);
+        CorrectAnswer = QuestionsVector.at(i).at(4);
+        TotalAttempts = QuestionsVector.at(i).at(5);
 
         // cout Summary Report Printing
-        cout << "   " << setw(2) << right << mathLevel << " | ";
-        cout << setw(3) << right << leftNum << " ";
-        cout << setw(1) << mathOperator << " ";
-        cout << setw(3) << left << rightNum << " = ";
-        cout << setw(4) << right << correctAnswer << " | ";
+        cout << "   " << setw(2) << right << MathLevel << " | ";
+        cout << setw(3) << right << LeftNum << " ";
+        cout << setw(1) << MathOperator << " ";
+        cout << setw(3) << left << RightNum << " = ";
+        cout << setw(4) << right << CorrectAnswer << " | ";
 
         // Printing Attempts
-        if (totalAttempts != 0) {
-            cout << "    " << totalAttempts << endl;
-            totalCorrect++; // Increase Correct Count
+        if (TotalAttempts != 0) {
+            cout << "    " << TotalAttempts << endl;
+            TotalCorrect++; // Increase Correct Count
         } else {
             cout << "Incorrect" << endl;
-            totalIncorrect++; // Increase Incorrect Count
+            TotalIncorrect++; // Increase Incorrect Count
         }
     }
 
     // Summary Totals
     cout << endl;
-    cout << "Total Questions: " << setw(4) << right << questionsVector.size() << endl;
-    cout << "Total Correct:   " << setw(4) << right << totalCorrect << endl;
-    cout << "Total Incorrect: " << setw(4) << right << totalIncorrect << endl;
-    cout << "Average Correct: " << setw(4) << right << ((totalCorrect * 100) / questionsVector.size()) << "%" << endl <<
+    cout << "Total Questions: " << setw(4) << right << QuestionsVector.size() << endl;
+    cout << "Total Correct:   " << setw(4) << right << TotalCorrect << endl;
+    cout << "Total Incorrect: " << setw(4) << right << TotalIncorrect << endl;
+    cout << "Average Correct: " << setw(4) << right << ((TotalCorrect * 100) / QuestionsVector.size()) << "%" << endl <<
             endl;;
 }
