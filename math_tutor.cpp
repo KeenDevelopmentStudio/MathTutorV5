@@ -224,7 +224,7 @@ void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel)
         TotalCorrect = 0; // Reset Correct Count
         TotalIncorrect = 0; // Reset Incorrect Count
         CurrentRange += LEVEL_RANGE_CHANGE; // Update Range to Match Level
-        cout << "You have risen to Math Level " << (MathLevel + LEVEL_RANGE_CHANGE) << endl;
+        cout << "You have risen to Math Level " << (MathLevel) << endl;
         cout << "Your new range is 0 - " << CurrentRange << endl;
     }
 
