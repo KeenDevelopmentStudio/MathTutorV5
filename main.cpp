@@ -50,7 +50,7 @@ int main() {
     do {
         cout << endl;
 
-        vector<int> CurrentQuestion = GenerateRandomQuestion(MathLevel, UserName);
+        vector<int> CurrentQuestion = GenerateRandomQuestion(MathLevel);
 
         bool IsCorrect = GiveThreeAttempts(UserName, CurrentQuestion);
 

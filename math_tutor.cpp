@@ -56,7 +56,8 @@ void DisplayGameIntro() {
 // end of DisplayGameIntro
 
 /**************
- *gets username
+ * Gets UserName
+ // Returns UserName
  **************/
 string GetUserName() {
     string UserName = "?";
@@ -70,9 +71,11 @@ string GetUserName() {
 // End of GetUserName
 
 /****************************************************************************
-// Generates 3 random numbers for questions and stores the values in a vector
+ * Generates 3 random numbers for questions and stores the values in a vector
+// Get MathLevel
+// Return Vector with MathLevel, LeftNum, MathOperator, RightNum, CorrectAnswer
 *****************************************************************************/
-vector<int> GenerateRandomQuestion(int MathLevel, string UserName) {
+vector<int> GenerateRandomQuestion(int MathLevel) {
     /// Math Equation Variables
     enum MathOperatorType { MT_ADD, MT_SUBTRACT, MT_MULTIPLY, MT_DIVIDE };
     int LeftNum;
@@ -143,7 +146,8 @@ vector<int> GenerateRandomQuestion(int MathLevel, string UserName) {
 // End of GenerateRandomNumber
 
 /**********************************************
- *Gets user's answer and checks for valid inputs
+ * Gets user's answer and checks for valid inputs
+ // Return UserAnswer
  **********************************************/
 int GetNumericValue() {
     int UserAnswer = 0;
@@ -159,7 +163,9 @@ int GetNumericValue() {
 // end of GetNumericValue
 
 /*********************************************************************************************************
-* Use a forloop to give them three attempts, checks for user's accuracy, and extracts data from the vector
+ * Use a forloop to give them three attempts, checks for user's accuracy, and extracts data from the vector
+ // Get UserName and CurrentQuestion Vector
+ // Return IsCorrect
 **********************************************************************************************************/
 bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion) {
     int UserAnswer = 0;
@@ -207,6 +213,7 @@ bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion) {
 
 /***************************************************************************
  *Changes MathLevel and range of possible numbers based on user's accuracy
+ // Get TotalCorrect, TotalIncorrect, MathLevel
  **************************************************************************/
 void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel) {
     // Leveling Up mathLevel
@@ -230,11 +237,13 @@ void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel)
         cout << "You have fallen to Math Level " << MathLevel << endl;
         cout << "Your new range is 0 - " << CurrentRange << endl;
     }
+    return;
 }
 // end of CheckForLevelChange
 
 /*******************************************************************
  *Asks if the user wants to keep playing and checks for valid input
+ // Return User Input
  *******************************************************************/
 string AskToPlayAgain() {
     string UserInput = "?";
@@ -243,6 +252,7 @@ string AskToPlayAgain() {
         cout << "Would you like to continue? (y / yes || n / no): " << endl;
 
         // Get Answer for Continue Question
+        cin.ignore();
         getline(cin, UserInput);
 
         // Lowercase transition
@@ -265,7 +275,8 @@ string AskToPlayAgain() {
 /******************************************************************************
  * Pulls data from vector to display a summary report of the user's answers
  * It displays the questions, answers, number of attempts, and average accuracy
- * *****************************************************************************/
+ // Gets QuestionsVector
+ ******************************************************************************/
 void DisplaySummaryReport(const vector<vector<int> > &QuestionsVector) {
     // Generate Report
     char MathOperator = 0;
@@ -320,7 +331,8 @@ void DisplaySummaryReport(const vector<vector<int> > &QuestionsVector) {
     cout << "Total Questions: " << setw(4) << right << QuestionsVector.size() << endl;
     cout << "Total Correct:   " << setw(4) << right << TotalCorrect << endl;
     cout << "Total Incorrect: " << setw(4) << right << TotalIncorrect << endl;
-    cout << "Average Correct: " << setw(4) << right << ((TotalCorrect * 100) / QuestionsVector.size()) << "%" << endl <<
-            endl;;
+    cout << "Average Correct: " << setw(4) << right << ((TotalCorrect * 100) / QuestionsVector.size()) << "%" << endl;
+
+    return;
 }
 // end of DisplaySummaryReport

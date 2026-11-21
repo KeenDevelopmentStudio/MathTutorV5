@@ -17,7 +17,7 @@ using namespace std;
 // Define Functions
 void DisplayGameIntro();
 string GetUserName();
-vector<int> GenerateRandomQuestion(int MathLevel, string UserName);
+vector<int> GenerateRandomQuestion(int MathLevel);
 int GetNumericValue();
 bool GiveThreeAttempts(string UserName, vector<int> &CurrentQuestion);
 void CheckForLevelChange(int &TotalCorrect, int &TotalIncorrect, int &MathLevel);
